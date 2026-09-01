@@ -11,7 +11,12 @@ import Footer from '../components/Footer.astro';
     <title>{title}</title>
   </head>
   <body id="top" class="dark-mode">
-    <Navbar />  
+    
+    <a href="https://mlh.com" target="_blank" rel="noreferrer" class="mlh-banner">
+      <img src="/mlh-banner.svg" alt="Major League Hacking Banner" />
+    </a>
+    <Navbar />
+
     <slot name="above-filter" /> <!-- outside the wrapper so no filter -->
     <div class="page-wrapper">
       <main>
@@ -26,6 +31,21 @@ import Footer from '../components/Footer.astro';
 
       .page-wrapper {
         transition: filter var(--transition-speed); }
+
+      .mlh-banner {
+        position: fixed;
+        top: 0;
+        right: 80px;
+        z-index: 10000;
+        display: block;
+        width: 80px;
+      }
+
+      .mlh-banner img {
+        width: 100%;
+        height: auto;
+      }
+
     </style>
   </body>
 </html>
