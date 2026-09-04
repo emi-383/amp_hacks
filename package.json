@@ -1,23 +1,26 @@
 {
   "name": "andhacks26",
-  "type": "module",
-  "version": "0.0.1",
-  "engines": {
-    "node": ">=22.12.0"
-  },
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
   },
   "dependencies": {
-    "@iconify-json/simple-icons": "^1.2.78",
-    "@tsparticles/all": "^3.9.1",
-    "@tsparticles/engine": "^3.9.1",
-    "@tsparticles/move-parallax": "^3.9.1",
-    "@tsparticles/slim": "^3.9.1",
-    "astro": "^6.1.2",
-    "astro-icon": "^1.1.5"
+    "next": "16.3.4",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.4",
+    "tailwindcss": "^4",
+    "typescript": "^5"
   }
 }

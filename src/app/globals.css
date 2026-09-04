@@ -1,0 +1,134 @@
+@import "tailwindcss";
+
+/* --------------------------------------------------------------------------
+   &Hacks XII — "Imagination"
+   Palette runs from deep space (top of page) to a sunrise horizon (bottom).
+   The transition is driven by --p, a 0→1 scroll progress set by <Sky />.
+   -------------------------------------------------------------------------- */
+
+@theme {
+  --color-void: #120726;
+  --color-deep: #1e0b45;
+  --color-mid: #4c1d95;
+  --color-plum: #7c3aed;
+  --color-pink: #f472b6;
+  --color-peach: #fb923c;
+  --color-gold: #fcd34d;
+  --color-cream: #fdf7ff;
+  --color-haze: #cbb6ef;
+
+  --font-display: var(--font-fraunces), Georgia, serif;
+  --font-sans: var(--font-nunito), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-blob: 2rem;
+}
+
+:root {
+  --p: 0; /* scroll progress, 0 at top → 1 at bottom */
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Nav is sticky; keep anchor targets clear of it. */
+  scroll-padding-top: 5rem;
+}
+
+body {
+  background: var(--color-void);
+  color: var(--color-cream);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+/* --- Sky layers ---------------------------------------------------------
+   Three fixed gradients cross-faded by --p. Cheaper and far smaller than a
+   canvas or a scroll library: opacity is the only animated property. */
+
+.sky {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+}
+
+.sky-layer {
+  position: absolute;
+  inset: 0;
+  will-change: opacity;
+}
+
+.sky-space {
+  background: radial-gradient(120% 90% at 50% 0%, #2a1160 0%, #150830 45%, #0d0420 100%);
+  opacity: calc(1 - clamp(0, var(--p) * 2, 1));
+}
+
+.sky-twilight {
+  background: linear-gradient(180deg, #1e0b45 0%, #4c1d95 40%, #9333ea 75%, #db2777 100%);
+  /* Peaks mid-scroll, fades either side. Written with min()/clamp() rather
+     than abs() so it works in older Safari and Firefox. */
+  opacity: min(clamp(0, var(--p) * 3, 1), clamp(0, (1 - var(--p)) * 2.4, 1));
+}
+
+.sky-dawn {
+  background: linear-gradient(180deg, #6d28d9 0%, #db2777 35%, #fb923c 70%, #fcd34d 100%);
+  opacity: clamp(0, (var(--p) - 0.55) * 2.6, 1);
+}
+
+/* Stars fade out as the sun comes up. */
+.stars {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: calc(1 - clamp(0, var(--p) * 1.5, 1));
+}
+
+/* --- Motion -------------------------------------------------------------- */
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-14px) rotate(1.5deg); }
+}
+
+@keyframes drift {
+  0% { transform: translateX(-4%); }
+  100% { transform: translateX(4%); }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 1; }
+}
+
+.animate-float { animation: float 7s ease-in-out infinite; }
+.animate-drift { animation: drift 26s ease-in-out infinite alternate; }
+
+/* --- Scroll reveal ------------------------------------------------------- */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Respect the user's motion preference: no float, drift, twinkle, or reveal. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  .animate-float,
+  .animate-drift,
+  .stars * {
+    animation: none !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
