@@ -34,7 +34,9 @@ export default function Nav() {
     >
       <nav
         aria-label="Main"
-        className="flex w-full items-center gap-4 px-5 py-4 sm:px-8 lg:px-12"
+        // pr-* clears the fixed MlhBadge (right-5 w-20, lg:right-8 w-24);
+        // if the badge moves or resizes, these have to move with it.
+        className="flex w-full items-center gap-4 px-5 py-4 pr-28 sm:px-8 sm:pr-28 lg:px-12 lg:pr-36"
       >
         <a
           href="#top"

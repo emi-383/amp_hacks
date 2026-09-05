@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Fraunces, Nunito } from "next/font/google";
 import "./globals.css";
 import { site } from "@/data/site";
+import MlhBadge from "@/components/MlhBadge";
 
 // Fraunces for display (soft, whimsical serif), Nunito for body (rounded).
 const fraunces = Fraunces({
@@ -41,7 +42,10 @@ export default function RootLayout({
       lang="en"
       className={`${fraunces.variable} ${nunito.variable} h-full antialiased`}
     >
-      <body className="min-h-full">{children}</body>
+      <body className="min-h-full">
+        <MlhBadge />
+        {children}
+      </body>
     </html>
   );
 }

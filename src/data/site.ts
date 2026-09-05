@@ -11,18 +11,19 @@ export const site = {
   blurb:
     "William & Mary's student hackathon. Free food, free merch, and you don't need to know how to code.",
 
-  // From the v1 site's own hero ("&Hacks 2026 / Sept. 25-27"), so this is the
-  // org's published date. Worth confirming with Libby before launch.
+  // Confirmed by the organisers 2026-09-05. Matches the date v1 has been
+  // publishing in its hero since April, so the two sites agree.
   date: {
     label: "September 25-27, 2026",
     detail: "Friday evening to Sunday",
     iso: "2026-09-25T18:00:00-04:00" as string | null,
   },
 
-  // "ISC4" is the building's campus shorthand, not somewhere a visitor can
-  // navigate to, so `name` spells it out. The street address and map link
-  // still have to come from the organisers - nothing is guessed here, and
-  // while `address` is empty the page falls back to naming the campus.
+  // Building confirmed by the organisers 2026-09-05. "ISC4" is the campus
+  // shorthand, not somewhere a visitor can navigate to, so `name` spells it
+  // out. The street address and map link were NOT part of that confirmation
+  // and are still unknown - nothing is guessed here, and while `address` is
+  // empty the page falls back to naming the campus.
   venue: {
     confirmed: true,
     name: "Integrated Science Center 4 (ISC4)",
@@ -37,6 +38,7 @@ export const site = {
     discord: "https://discord.gg/4AJgGBEfQW",
     instagram: "https://www.instagram.com/andhackswm/",
     email: "computing@wm.edu",
+    mlh: "https://mlh.com",
     mlhCodeOfConduct: "https://mlh.io/code-of-conduct",
   },
 } as const;
