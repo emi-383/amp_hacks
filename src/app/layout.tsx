@@ -18,11 +18,11 @@ const nunito = Nunito({
 });
 
 export const metadata: Metadata = {
-  title: `${site.name} — ${site.organization}`,
-  description: `${site.name} is a free, weekend-long hackathon at ${site.organization}. ${site.tagline} No experience needed.`,
+  title: `${site.name} | ${site.organization}`,
+  description: `${site.blurb} ${site.date.label} in ${site.venue.city}.`,
   openGraph: {
-    title: `${site.name} — ${site.organization}`,
-    description: `A free, weekend-long hackathon at ${site.organization}. ${site.date.label}.`,
+    title: `${site.name} | ${site.organization}`,
+    description: `${site.tagline}. ${site.date.label} in ${site.venue.city}.`,
     type: "website",
   },
 };

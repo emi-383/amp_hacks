@@ -132,3 +132,40 @@ export function Constellation({ className = "" }: ArtProps) {
     </svg>
   );
 }
+
+/**
+ * The horizon the page lands on. The sky reaches sunrise yellow at the bottom
+ * of the page, so the last section and the footer sit on this instead, which
+ * keeps their text readable and puts the sun behind a hill where it belongs.
+ * Stretched with preserveAspectRatio="none", so give it a height, not a width.
+ */
+export function Ground({ className = "" }: ArtProps) {
+  return (
+    <svg
+      viewBox="0 0 1440 200"
+      preserveAspectRatio="none"
+      className={className}
+      aria-hidden="true"
+    >
+      {/* far hill, lighter so the two read as separate ridges */}
+      <path
+        d="M0 122C196 58 337 141 561 111 785 81 903 20 1122 61c158 30 240 12 318 25v114H0Z"
+        fill="#2a1160"
+      />
+      {/* near hill, same colour as the ground the footer sits on */}
+      <path
+        d="M0 160C158 121 301 178 521 159 761 138 979 96 1181 133c122 22 199 14 259 8v59H0Z"
+        fill="#150830"
+      />
+      {/* sunrise catching the near ridge */}
+      <path
+        d="M0 160C158 121 301 178 521 159 761 138 979 96 1181 133c122 22 199 14 259 8"
+        fill="none"
+        stroke="#fcd34d"
+        strokeOpacity="0.4"
+        strokeWidth="2"
+        vectorEffect="non-scaling-stroke"
+      />
+    </svg>
+  );
+}

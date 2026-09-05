@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 /* --------------------------------------------------------------------------
-   &Hacks XII — "Imagination"
+   &hacks XII, theme "Imagination"
    Palette runs from deep space (top of page) to a sunrise horizon (bottom).
-   The transition is driven by --p, a 0→1 scroll progress set by <Sky />.
+   The transition is driven by --p, a scroll progress that runs 0 to 1, set by <Sky />.
    -------------------------------------------------------------------------- */
 
 @theme {
@@ -16,6 +16,7 @@
   --color-gold: #fcd34d;
   --color-cream: #fdf7ff;
   --color-haze: #cbb6ef;
+  --color-ground: #150830;
 
   --font-display: var(--font-fraunces), Georgia, serif;
   --font-sans: var(--font-nunito), ui-sans-serif, system-ui, sans-serif;
@@ -24,7 +25,8 @@
 }
 
 :root {
-  --p: 0; /* scroll progress, 0 at top → 1 at bottom */
+  --p: 0; /* scroll progress, 0 at the top of the page, 1 at the bottom */
+  --sy: 0px; /* raw scroll offset, for parallax that moves in step with the page */
 }
 
 html {
@@ -74,13 +76,63 @@ body {
   opacity: clamp(0, (var(--p) - 0.55) * 2.6, 1);
 }
 
-/* Stars fade out as the sun comes up. */
+/* --- Starfields ---------------------------------------------------------
+   Two fixed layers that scroll up at different rates, which is what reads as
+   depth. Each layer is taller than the viewport and starts overhanging the
+   top, so travelling upwards never drags empty sky in at the bottom.
+
+   Percentages in translate resolve against the layer's own height, so the
+   travel is bounded no matter how long the page gets - a px offset scaled off
+   --sy would run the stars clean off a tall page. They fade out as the sun
+   comes up regardless. */
+
 .stars {
   position: fixed;
-  inset: 0;
+  left: 0;
+  right: 0;
+  top: -30%;
+  height: 160%;
   z-index: -1;
   pointer-events: none;
   opacity: calc(1 - clamp(0, var(--p) * 1.5, 1));
+  will-change: transform;
+  /* Keeps a star near the right or bottom edge from widening the page. */
+  overflow: hidden;
+}
+
+/* Each star is its own element sized in px, so it stays round whatever the
+   window's aspect ratio. An svg stretched to fill the viewport cannot: it
+   needs preserveAspectRatio="none", which scales x and y differently and
+   flattens every circle into an ellipse. */
+.stars .star {
+  position: absolute;
+  border-radius: 50%;
+  background: rgb(253 247 255 / var(--star-dim, 1));
+}
+
+.stars-far {
+  --star-dim: 0.7;
+  transform: translate3d(0, calc(var(--p) * -10%), 0);
+}
+
+.stars-near {
+  transform: translate3d(0, calc(var(--p) * -28%), 0);
+}
+
+/* --- Parallax ------------------------------------------------------------
+   Hero decorations that scroll away slower than the page. Only for art with
+   no keyframe animation of its own: an animation on transform would win over
+   these and the element would simply stop parallaxing. The hero clips both of
+   its decoration layers, so nothing here can escape the section. */
+
+.parallax-near {
+  transform: translate3d(0, calc(var(--sy) * 0.22), 0);
+  will-change: transform;
+}
+
+.parallax-far {
+  transform: translate3d(0, calc(var(--sy) * 0.08), 0);
+  will-change: transform;
 }
 
 /* --- Motion -------------------------------------------------------------- */
@@ -116,6 +168,34 @@ body {
   transform: none;
 }
 
+
+/* --- FAQ accordion -------------------------------------------------------
+   Height animation without measuring anything in JS: the panel is a grid whose
+   single row goes from 0fr to 1fr, which resolves to the answer's real height.
+   The inner wrapper does the clipping. */
+
+.faq-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition:
+    grid-template-rows 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 220ms ease-out;
+}
+
+.faq-panel.is-open {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  transition:
+    grid-template-rows 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 320ms ease-in 120ms;
+}
+
+.faq-panel > * {
+  overflow: hidden;
+  min-height: 0;
+}
+
 /* Respect the user's motion preference: no float, drift, twinkle, or reveal. */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -126,9 +206,24 @@ body {
     animation: none !important;
   }
 
+  /* Parallax is motion too: park every layer at its resting position. */
+  .stars-far,
+  .stars-near,
+  .parallax-near,
+  .parallax-far {
+    transform: none;
+  }
+
   .reveal {
     opacity: 1;
     transform: none;
+    transition: none;
+  }
+
+  /* Both selectors: .faq-panel.is-open outside this block would otherwise
+     win on specificity and keep animating. */
+  .faq-panel,
+  .faq-panel.is-open {
     transition: none;
   }
 }

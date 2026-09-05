@@ -34,13 +34,13 @@ export default function Nav() {
     >
       <nav
         aria-label="Main"
-        className="mx-auto flex w-full max-w-6xl items-center gap-4 px-5 py-4 sm:px-8"
+        className="flex w-full items-center gap-4 px-5 py-4 sm:px-8 lg:px-12"
       >
         <a
           href="#top"
           className="font-display text-xl font-semibold text-cream focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
         >
-          &amp;Hacks <span className="text-gold">XII</span>
+          &amp;hacks <span className="text-gold">XII</span>
         </a>
 
         <ul className="ml-auto hidden items-center gap-7 md:flex">
@@ -82,7 +82,7 @@ export default function Nav() {
       {open && (
         <ul
           id="mobile-menu"
-          className="border-t border-cream/10 bg-void/95 px-5 pb-5 backdrop-blur-md md:hidden"
+          className="border-t border-cream/10 bg-void/95 px-5 pb-5 backdrop-blur-md sm:px-8 md:hidden"
         >
           {nav.map((item) => (
             <li key={item.href}>
