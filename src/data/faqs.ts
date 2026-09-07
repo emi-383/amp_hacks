@@ -17,12 +17,12 @@ export const faqs = [
   {
     question: 'Are there rules?',
     answer:
-      'You can use AI at &hacks! More material can be found in the Major League Hacking Code of Conduct.',
+      'All hackers, organizers, volunteers, and sponsors are expected to follow the <a href="https://mlh.io/code-of-conduct" target="_blank" rel="noreferrer">Major League Hacking Code of Conduct</a>, which covers expected behavior, harassment, and how to report an incident.',
   },
   {
     question: 'Can I go solo?',
     answer:
-      'You can go solo or work in a team! Join our discord server to find a team: DISCORD, or attend the team-building workshop at &hacks itself.',
+      'You can go solo or work in a team! Join our <a href="https://discord.gg/ve8JwXSB" target="_blank" rel="noreferrer">Discord server</a> to find a team, or attend the team-building workshop at &hacks itself.',
   },
   {
     question: "What if I don't submit a project?",

@@ -17,7 +17,7 @@ import { faqs } from '../data/faqs';
             </span>
           </summary>
           <div class="faq-answer">
-            <p>{item.answer}</p>
+            <p set:html={item.answer}></p>
           </div>
         </details>
       ))}
@@ -116,5 +116,17 @@ import { faqs } from '../data/faqs';
     margin: 0;
     line-height: 1.6;
     opacity: 0.9;
+  }
+
+  .faq-answer :global(a) {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    transition: opacity 160ms ease;
+  }
+
+  .faq-answer :global(a:hover),
+  .faq-answer :global(a:focus-visible) {
+    opacity: 0.7;
   }
 </style>
